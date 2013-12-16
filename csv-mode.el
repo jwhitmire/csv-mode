@@ -146,7 +146,7 @@ All must be different from the field quote characters, `csv-field-quotes'."
      (if (or (/= (length x) 1)
        (and (boundp 'csv-field-quotes)
             (member x csv-field-quotes)))
-         (error)))
+         (error "something dastardly just happened")))
          value)
    (custom-set-default variable value)
    (setq csv-separator-chars (mapcar 'string-to-char value)
@@ -169,7 +169,7 @@ All must be different from the field separators, `csv-separators'."
    (mapc (lambda (x)
      (if (or (/= (length x) 1)
        (member x csv-separators))
-         (error)))
+         (error "somehow, you fell off the boat")))
          value)
    (when (boundp 'csv-mode-syntax-table)
      ;; FIRST remove old quote syntax:
@@ -256,16 +256,16 @@ Number of spaces used by `csv-align-fields' after separators."
 
 (defconst csv-mode-line-help-echo
   ;; See bindings.el for details of `mode-line-format' construction.
-  (get-text-property 0 'help-echo (car default-mode-line-format))
+  (get-text-property 0 'help-echo (car mode-line-format))
   "Primary default mode line help echo text.")
 
 (defconst csv-mode-line-format
   ;; See bindings.el for details of `mode-line-format' construction.
-  (append (butlast default-mode-line-format 2)
+  (append (butlast mode-line-format 2)
     (cons `(csv-field-index-string
       ("" csv-field-index-string
        ,(propertize "--" 'help-echo csv-mode-line-help-echo)))
-		(last default-mode-line-format 2)))
+		(last mode-line-format 2)))
   "Mode line format string for CSV mode.")
 
 (define-derived-mode csv-mode text-mode "CSV"
